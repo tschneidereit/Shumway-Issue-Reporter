@@ -1,0 +1,27 @@
+<% pageTitle='Shumway Issue Reporter' %>
+<% include header %>
+        <form id="form" style='width: 500px; clear: both'>
+        <fieldset>
+          <div class='field required'>
+            <label for='input-url' title="Required">URL of the page the error was encountered on</label>
+            <input id="input-url" class='fill-width' type="url" required value='<%= url %>'>
+          </div>
+          <div class='field required'>
+            <label for='input-swf' title="Required">URL of the SWF the error was encountered on</label>
+            <input id="input-swf" class='fill-width' type="url" required value='<%= swf %>'>
+          </div>
+          <p>Shumway version: <%= shumwayVersion %> | Firefox version: <%= firefoxVersion %></p>
+          <div class='field'>
+            <label for='input-email'>Your Email (optional, non-public)</label>
+            <input id="input-email" class='fill-width' type="email">
+          </div>
+          <div class='field'>
+            <label for='input-description'>Description (optional)</label>
+            <textarea id="input-description" class='fill-width' rows='20'></textarea>
+          </div>
+          <div class="field">
+            <input class="button" type="button" value="Submit"></input>
+          </div>
+          </fieldset>
+        </form>
+<% include footer %>

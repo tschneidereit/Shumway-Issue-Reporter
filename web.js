@@ -1,4 +1,5 @@
 var express = require("express");
+var pg = require("pg");
 var url = require('url');
 var app = express();
 app.use(express.logger());
@@ -11,13 +12,28 @@ app.get('/input', function(req, res) {
   var ua = req.headers['user-agent'].split(' ').pop();
   var params = url.parse(req.url, true).query;
   res.render('input', {
-    shumwayVersion: params.shubuild || 'not specified', 
-    firefoxVersion: params.ffbuild || 'not specified',
+    shumwayVersion: params.shubuild || 'n/a', 
+    firefoxVersion: params.ffbuild || 'n/a',
     url: params.url || '',
     swf: params.swf || ''});
 });
-app.put('/submit', function(request, response) {
-  response.send('submit!');
+app.get('/submit', function(req, res) {
+  var params = url.parse(req.url, true).query;
+  var values = [0, 'now', params.url, params.swf, 
+                params.shumwayVersion, params.firefoxVersion, 
+                params.email, params.description];
+  var query = 'INSERT INTO issues VALUES ($1, $2, $3, $4, $5, $6, $7, $8);';
+  pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+    client.query(query, values, function(err, result) {
+      done();
+      if(err) {
+        console.log(err);
+        res.render('submit-error');
+      } else {
+        res.render('submit');
+      }
+    });
+  });
 });
 app.get('/list', function(request, response) {
   response.send('List!');

@@ -1,27 +1,36 @@
 <% pageTitle='Shumway Issue Reporter' %>
 <% include header %>
-        <form id="form" style='width: 500px; clear: both'>
+        <form id="form" action='submit' style='width: 500px; clear: both'>
         <fieldset>
           <div class='field required'>
             <label for='input-url' title="Required">URL of the page the error was encountered on</label>
-            <input id="input-url" class='fill-width' type="url" required value='<%= url %>'>
+            <input id="input-url" name='url' class='fill-width' type="url" required value='<%= url %>'>
           </div>
           <div class='field required'>
             <label for='input-swf' title="Required">URL of the SWF the error was encountered on</label>
-            <input id="input-swf" class='fill-width' type="url" required value='<%= swf %>'>
+            <input id="input-swf" name='swf' class='fill-width' type="url" required value='<%= swf %>'>
           </div>
           <p>Shumway version: <%= shumwayVersion %> | Firefox version: <%= firefoxVersion %></p>
+          <input type='hidden' name='shumwayVersion' value='<%= shumwayVersion %>'>
+          <input type='hidden' name='firefoxVersion' value='<%= firefoxVersion %>'>
           <div class='field'>
             <label for='input-email'>Your Email (optional, non-public)</label>
-            <input id="input-email" class='fill-width' type="email">
+            <input id="input-email" name='email' class='fill-width' type="email">
           </div>
           <div class='field'>
             <label for='input-description'>Description (optional)</label>
-            <textarea id="input-description" class='fill-width' rows='20'></textarea>
+            <textarea id="input-description" name='description' class='fill-width' rows='20'></textarea>
           </div>
           <div class="field">
-            <input class="button" type="button" value="Submit"></input>
+            <input id='submit-form' class="button" type="submit" value="Submit"></input>
           </div>
           </fieldset>
         </form>
+        <script>
+        document.getElementById('submit-form').addEventListener('click', function(event) {
+          console.log(435);
+          // event.preventDefault();
+
+        });
+        </script>
 <% include footer %>

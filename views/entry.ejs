@@ -1,0 +1,14 @@
+<% pageTitle='Shumway Issue Reporter' %>
+<% include header %>
+        <div>
+          <h2>Report Details</h2>
+          <table>
+            <tr><td>Page Url:</td><td><a href="<%= entry.pageUrl %>"><%= entry.pageurl %></a></td></tr>
+            <tr><td>SWF Url:</td><td><a href="<%= entry.swfUrl %>"><%= entry.swfurl %></td></tr>
+            <tr><td>Submitted at:</td><td><%= entry.submission %></td></tr>
+            <tr><td>Shumway Version:</td><td><%= entry.shumwayversion %></td></tr>
+            <tr><td>Firefox Version:</td><td><%= entry.firefoxversion %></td></tr>
+            <tr><td>Description:</td><td><%= entry.description %></td></tr>
+          </table>
+        </div>
+<% include footer %>

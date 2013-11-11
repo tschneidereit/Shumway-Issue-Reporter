@@ -2,3 +2,6 @@
 	width: 500px;
 	clear: both;
 }
+#content_area > section td, #content_area > section th {
+	padding-right: 15px;
+}

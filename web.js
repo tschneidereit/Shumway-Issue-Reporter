@@ -50,8 +50,20 @@ app.get('/list', function(req, res) {
     });
   });
 });
-app.get('/entry', function(req, res) {
-  response.send('Entry!');
+app.get('/entry/:id', function(req, res) {
+  var query = 'SELECT * FROM issues WHERE id=$1;';
+  pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+    client.query(query, [req.params.id], function(err, result) {
+      done();
+      if(err) {
+        console.log(err);
+        res.render('entry-error');
+      } else {
+        console.log(JSON.stringify(result.rows));
+        res.render('entry', {entry:result.rows[0], stylesDir: '../style/'});
+      }
+    });
+  });
 });
 
 app.get('*', function(request, response) {

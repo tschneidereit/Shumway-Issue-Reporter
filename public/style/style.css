@@ -1,0 +1,4 @@
+#content_area > section > div {
+	width: 500px;
+	clear: both;
+}

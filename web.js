@@ -35,10 +35,22 @@ app.get('/submit', function(req, res) {
     });
   });
 });
-app.get('/list', function(request, response) {
-  response.send('List!');
+app.get('/list', function(req, res) {
+  var query = 'SELECT * FROM issues;';
+  pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+    client.query(query, function(err, result) {
+      done();
+      if(err) {
+        console.log(err);
+        res.render('list-error');
+      } else {
+        console.log(JSON.stringify(result));
+        res.render('list', {entries:result.rows});
+      }
+    });
+  });
 });
-app.get('/entry', function(request, response) {
+app.get('/entry', function(req, res) {
   response.send('Entry!');
 });
 

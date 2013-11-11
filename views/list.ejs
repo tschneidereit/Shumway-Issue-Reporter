@@ -1,0 +1,20 @@
+<% pageTitle='Shumway Issue Reporter' %>
+<% include header %>
+        <div>
+          <h2>Reports</h2>
+          <table style='text-align: left'>
+            <tr>
+              <th>Date</th>
+              <th>Website</th>
+              <th>Description</th>
+            </tr>
+            <% entries.forEach(function(entry) { %>
+              <tr>
+                <td><%= entry.submission %></td>
+                <td><a href="<%= entry.pageurl %>"><%= entry.pageurl.substr(0, 50) %></a></td>
+                <td><%= entry.description.substr(0, 50) %></td>
+              </tr>
+            <% }); %>
+          </table>
+        </div>
+<% include footer %>

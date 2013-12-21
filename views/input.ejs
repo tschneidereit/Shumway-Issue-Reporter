@@ -1,6 +1,6 @@
 <% pageTitle='Shumway Issue Reporter' %>
 <% include header %>
-        <form id="form" action='submit'>
+        <form id="form" action='submit' method='POST'>
         <fieldset>
           <div class='field required'>
             <label for='input-url' title="Required">URL of the page the error was encountered on</label>
@@ -21,6 +21,10 @@
             <label for='input-description'>Description (optional)</label>
             <textarea id="input-description" name='description' class='fill-width' rows='20'></textarea>
           </div>
+          <div class='field'>
+            <label for='input-exceptions'>Errors that occurred during SWF execution (This data helps us analyze the problems)</label>
+            <textarea id="input-exceptions" name='exceptions' class='fill-width' rows='3'><%= exceptions %></textarea>
+          </div>
           <div class="field">
             <input id='submit-form' class="button" type="submit" value="Submit">
           </div>
@@ -28,8 +32,6 @@
         </form>
         <script>
         document.getElementById('submit-form').addEventListener('click', function(event) {
-          console.log(435);
-          // event.preventDefault();
 
         });
         </script>

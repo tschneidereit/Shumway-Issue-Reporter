@@ -5,24 +5,28 @@ var app = express();
 app.use(express.logger());
 
 app.use(express.static(__dirname + '/public'));
+app.use(express.bodyParser());
 app.set("views", __dirname + "/views");
 app.set("view engine", "ejs");
 
 app.post('/input', function(req, res) {
   var ua = req.headers['user-agent'].split(' ').pop();
-  var params = url.parse(req.url, true).query;
+  var params = req.query;
   res.render('input', {
     shumwayVersion: params.shubuild || 'n/a', 
     firefoxVersion: params.ffbuild || 'n/a',
     url: params.url || '',
-    swf: params.swf || ''});
+    swf: params.swf || '',
+    exceptions: req.body.exceptions});
 });
-app.get('/submit', function(req, res) {
-  var params = url.parse(req.url, true).query;
-  var values = [0, 'now', params.url, params.swf, 
+app.post('/submit', function(req, res) {
+  var params = req.body;
+  var values = ['now', params.url, params.swf, 
                 params.shumwayVersion, params.firefoxVersion, 
-                params.email, params.description];
-  var query = 'INSERT INTO issues VALUES ($1, $2, $3, $4, $5, $6, $7, $8);';
+                params.email, params.description, params.exceptions];
+  var columns = 'submission, pageUrl, swfUrl, shumwayVersion, firefoxVersion, email, ' +
+                'description, exceptions';
+  var query = 'INSERT INTO issues (' + columns + ') VALUES ($1, $2, $3, $4, $5, $6, $7, $8);';
   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
     client.query(query, values, function(err, result) {
       done();
@@ -59,7 +63,13 @@ app.get('/entry/:id', function(req, res) {
         console.log(err);
         res.render('entry-error');
       } else {
-        console.log(JSON.stringify(result.rows));
+          var exceptions = result.rows[0].exceptions;
+        try {
+          exceptions = JSON.stringify(JSON.parse(exceptions), null, 2);
+        } catch (e) {
+          exceptions = 'no valid stacks';
+        }
+        result.rows[0].exceptions = exceptions;
         res.render('entry', {entry:result.rows[0], stylesDir: '../style/'});
       }
     });

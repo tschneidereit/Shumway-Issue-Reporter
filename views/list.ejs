@@ -13,6 +13,7 @@
                 <td><a href="<%= 'entry/' + entry.id %>"><%= entry.submission %></a></td>
                 <td><a href="<%= entry.pageurl %>"><%= entry.pageurl.substr(0, 50) %></a></td>
                 <td><%= entry.description.substr(0, 50) %></td>
+                <td><%= (entry.exceptions || '').substr(0, 50) %></td>
               </tr>
             <% }); %>
           </table>

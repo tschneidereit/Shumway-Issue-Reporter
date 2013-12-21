@@ -6,5 +6,6 @@ CREATE TABLE issues (
     shumwayVersion  varchar(10) NOT NULL,
     firefoxVersion  varchar(25) NOT NULL,
     email           varchar(255),
-    description     text
+    description     text,
+    exceptions		text
 )

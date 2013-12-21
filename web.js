@@ -8,7 +8,7 @@ app.use(express.static(__dirname + '/public'));
 app.set("views", __dirname + "/views");
 app.set("view engine", "ejs");
 
-app.get('/input', function(req, res) {
+app.post('/input', function(req, res) {
   var ua = req.headers['user-agent'].split(' ').pop();
   var params = url.parse(req.url, true).query;
   res.render('input', {

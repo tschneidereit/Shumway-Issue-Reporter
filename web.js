@@ -34,7 +34,7 @@ app.post('/submit', function(req, res) {
         console.log(err);
         res.render('submit-error');
       } else {
-        res.render('submit');
+        res.render('submit', {id: result.rows[0].id});
       }
     });
   });

@@ -5,3 +5,7 @@
 #content_area > section td, #content_area > section th {
 	padding-right: 15px;
 }
+
+#content_area .back-link {
+	text-align: right;
+}

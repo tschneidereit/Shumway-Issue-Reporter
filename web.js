@@ -26,7 +26,7 @@ app.post('/submit', function(req, res) {
                 params.email, params.description, params.exceptions];
   var columns = 'submission, pageUrl, swfUrl, shumwayVersion, firefoxVersion, email, ' +
                 'description, exceptions';
-  var query = 'INSERT INTO issues (' + columns + ') VALUES ($1, $2, $3, $4, $5, $6, $7, $8);';
+  var query = 'INSERT INTO issues (' + columns + ') VALUES ($1, $2, $3, $4, $5, $6, $7, $8) returning *;';
   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
     client.query(query, values, function(err, result) {
       done();
@@ -34,6 +34,7 @@ app.post('/submit', function(req, res) {
         console.log(err);
         res.render('submit-error');
       } else {
+        console.log(JSON.stringify(result));
         res.render('submit', {id: result.rows[0].id});
       }
     });
@@ -48,7 +49,6 @@ app.get('/list', function(req, res) {
         console.log(err);
         res.render('list-error');
       } else {
-        console.log(JSON.stringify(result));
         res.render('list', {entries:result.rows});
       }
     });

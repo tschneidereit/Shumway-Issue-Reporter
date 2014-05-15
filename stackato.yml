@@ -1,0 +1,11 @@
+name: shumway-issue-reporter
+mem: 64M
+framework:
+  type: node
+services:
+  ${name}-db: postgresql
+processes:
+  web: node web.js
+hooks:
+  post-staging:
+    - dbshell < create-issues-table.sql
